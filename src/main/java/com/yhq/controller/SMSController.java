@@ -1,8 +1,8 @@
 package com.yhq.controller;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,8 +17,8 @@ import com.me.plugin.SMSCode;
 public class SMSController extends BaseController{
 	
 	@RequestMapping(method=RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String getToken(
-		@Param("tel") String tel
+	public String getSMSCode(
+		@RequestParam("tel") String tel
 	) {
 		String smsCode = StrKit.generatorNumberCode(4);
 		String msg = SMSCode.sendSMSCode(smsCode, tel);
@@ -29,6 +29,8 @@ public class SMSController extends BaseController{
 				.getBooleanValue("success")) {
 			result = Response.success("获得验证码成功");
 			Session.put(tel, smsCode);
+			Session.setTimeout(tel, new Long(300));
+			String code = String.valueOf(Session.get(tel));
 		} else {
 			result = Response.error("获验证码失败");
 		}

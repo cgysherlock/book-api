@@ -1,16 +1,15 @@
 package com.me.interceptor;
 
 import java.io.PrintWriter;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.me.http.HttpKit;
 import com.me.http.Response;
@@ -18,18 +17,17 @@ import com.me.http.Session;
 import com.me.http.Token;
 import com.me.kit.StrKit;
 import com.me.model.Message;
-import com.me.plugin.Redis;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-	
-	@Autowired  
-    private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
 		printRequest(request);
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		response.setHeader("Content-Type", "application/json;charset=utf-8");
 		String access_token = request.getHeader("Authorization");
 		Token token = StrKit.notBlank(access_token) ? (Token)Session.get(access_token) : null;
 		Message message = Token.checkToken(token);
@@ -56,7 +54,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		String base = request.getContextPath();
 		String uri = request.getRequestURI();
 		String action = uri.replaceFirst(base, "");
-		String[] actions = {"login", "regist", "SMSCode"};
+		String[] actions = {"login", "regist", "SMSCode", "token"};
 		for(String s : actions){
 			if((pre + s).equals(action)){
 				return true;

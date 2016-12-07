@@ -3,12 +3,12 @@ package com.yhq.service;
 import java.util.List;
 
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yhq.dao.EquipmentDao;
 import com.yhq.dao.UserDao;
 import com.me.model.Message;
 import com.yhq.model.User;

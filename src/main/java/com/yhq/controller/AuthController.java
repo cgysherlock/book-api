@@ -1,12 +1,9 @@
 package com.yhq.controller;
 
 
-import java.util.HashSet;
-import java.util.Set;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,23 +12,25 @@ import com.me.controller.BaseController;
 import com.me.http.HttpKit;
 import com.me.http.Response;
 import com.me.model.Message;
-import com.me.plugin.Redis;
+import com.yhq.model.Register;
 import com.yhq.service.AuthService;
 
 
 @RestController
-@RequestMapping(value="/auth/token")
+@RequestMapping(value="/token")
 public class AuthController extends BaseController{
 	
 	@Autowired
 	AuthService authService;
 
-	@RequestMapping(method=RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(method=RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String getToken(
-		@Param("tel") String tel, 
-		@Param("password") String password
+		@RequestBody Register register
 	) {
-		Message message = authService.verification(tel, password);
+		String tel = register.getTel();
+		String password = register.getPassword();
+		String smsCode = register.getSmsCode();
+		Message message = authService.verification(tel, password, smsCode);
 		Response response = new Response(message);
 		return HttpKit.toJson(response);
 	}

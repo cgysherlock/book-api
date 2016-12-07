@@ -20,7 +20,6 @@ public class SMSCode {
 	public static final String TEST_SECRET = "appsecret";
 	
 	public static String sendSMSCode(String code, String tel) {
-		System.out.println(code +" : "+tel);
 		TaobaoClient client = new DefaultTaobaoClient(URL, APP_KEY, SECRET, "json");
 		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend( "" );
