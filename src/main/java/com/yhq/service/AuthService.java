@@ -128,7 +128,9 @@ public class AuthService {
 		List<User> list = userDao.findByTel(tel);
 		User u = list.size() > 0 ? list.get(0) : null;
 		if (u == null){
-			User user = new User(tel, password);
+			User user = new User();
+			user.setTel(tel);
+			user.setPassword(password);
 			userDao.save(user);
 			message = Message.success("注册成功");
 			message.dataPut("access_token", getAccessToken(user));

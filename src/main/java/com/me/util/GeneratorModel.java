@@ -12,6 +12,12 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
 public class GeneratorModel {
 	private String packageOutPath = "com.yhq.model";// 指定实体生成所在包的路径
 	private String authorName = "yhq";// 作者名字
@@ -67,7 +73,7 @@ public class GeneratorModel {
 			}
 
 			String content = parse(colnames, colTypes, colSizes);
-			String hbm = parseHbm(colnames, colTypes, colSizes);
+			//String hbm = parseHbm(colnames, colTypes, colSizes);
 
 			try {
 				File directory = new File("");
@@ -84,13 +90,13 @@ public class GeneratorModel {
 				pw.close();
 				
 				
-				File hbmDirectory = new File("");
-				String hbmOutputPath = hbmDirectory.getAbsolutePath() + "/src/main/resources/hbm/"+ initcap(modelName) + ".hbm.xml";
-				FileWriter hbmFw = new FileWriter(hbmOutputPath);
-				PrintWriter hbmPw = new PrintWriter(hbmFw);
-				hbmPw.println(hbm);
-				hbmPw.flush();
-				hbmPw.close();
+//				File hbmDirectory = new File("");
+//				String hbmOutputPath = hbmDirectory.getAbsolutePath() + "/src/main/resources/hbm/"+ initcap(modelName) + ".hbm.xml";
+//				FileWriter hbmFw = new FileWriter(hbmOutputPath);
+//				PrintWriter hbmPw = new PrintWriter(hbmFw);
+//				hbmPw.println(hbm);
+//				hbmPw.flush();
+//				hbmPw.close();
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -129,13 +135,18 @@ public class GeneratorModel {
 			sb.append("import java.sql.*;\r\n");
 		}
 		sb.append("\r\n");
+		sb.append("import javax.persistence.*;\r\n");
+		sb.append("\r\n");
 		// 注释部分
-		sb.append("   /**\r\n");
-		sb.append("    * " + modelName + " 实体类\r\n");
-		sb.append("    * " + new Date() + " " + this.authorName + "\r\n");
-		sb.append("    */ \r\n");
+		sb.append("/**\r\n");
+		sb.append(" * " + modelName + " 实体类\r\n");
+		sb.append(" * " + new Date() + " " + this.authorName + "\r\n");
+		sb.append(" */ \r\n");
 		// 实体部分
-		sb.append("\r\n\r\npublic class " + initcap(modelName) + "{\r\n");
+		sb.append("@Entity\r\n");
+		sb.append("@Table(name = \"" + tablename + "\")\r\n");  
+		sb.append("public class " + initcap(modelName) + "{\r\n");
+		sb.append("\r\n");
 		processAllAttrs(sb);// 属性
 		processAllMethod(sb);// get set方法
 		sb.append("}\r\n");
@@ -194,7 +205,18 @@ public class GeneratorModel {
 	private void processAllAttrs(StringBuffer sb) {
 
 		for (int i = 0; i < colnames.length; i++) {
+			if (parseString(colnames[i]).equals("id")) {
+				sb.append("\t@Id\r\n");
+				sb.append("\t@GeneratedValue(strategy = GenerationType.AUTO)\r\n");
+			} else {
+				if (colnames[i].equals(parseString(colnames[i]))) {
+					sb.append("\t@Column\r\n");
+				} else {
+					sb.append("\t@Column(name = \"" + colnames[i] + "\")\r\n");
+				}
+			}
 			sb.append("\tprivate " + sqlType2JavaType(colTypes[i]) + " " + parseString(colnames[i]) + ";\r\n");
+			sb.append("\r\n");
 		}
 
 	}
