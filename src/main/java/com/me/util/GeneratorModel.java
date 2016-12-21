@@ -21,8 +21,8 @@ import javax.persistence.Table;
 public class GeneratorModel {
 	private String packageOutPath = "com.yhq.model";// 指定实体生成所在包的路径
 	private String authorName = "yhq";// 作者名字
-	private String tablename = "sys_user";// 表名
-	private String modelName = "user";
+	private String tablename = "ssf_concern";// 表名
+	private String modelName = "Concern";
 	private String pkgName = "com.yhq.model";// 包名
 	private String[] colnames; // 列名数组
 	private String[] colTypes; // 列名类型数组
