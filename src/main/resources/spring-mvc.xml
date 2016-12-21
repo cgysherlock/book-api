@@ -29,7 +29,7 @@
 	<!-- 配置拦截器 -->
  	<!-- <mvc:interceptors>    
 	    <mvc:interceptor>    
-	        匹配的是url路径， 如果不配置或/**,将拦截所有的Controller  
+	        匹配的是url路径， 如果不配置或/**,将拦截所有的Controller 
 	       	<mvc:mapping path="/**" /> 
 	        <mvc:exclude-mapping path="/auth/token"/> 
 	        <bean class="com.me.interceptor.AuthInterceptor"></bean>    
@@ -42,14 +42,14 @@
 
 	<!-- 整合freemarker -->
 	<!-- 加载freemarker的基本配置 freemarker.properties -->
-	<bean id="freemarkerSettings"
+	<!-- <bean id="freemarkerSettings"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="location" value="classpath:freemarker.properties" />
 	</bean>
 	<bean id="freemarkerConfigurer"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="freemarkerSettings" ref="freemarkerSettings" />
- 		<!-- <property name="templateLoaderPath" value="/WEB-INF/view/" /> -->    	
+ 		<property name="templateLoaderPath" value="/WEB-INF/view/" />    	
  		<property name="templateLoaderPaths">
             <list>
                 <value>/WEB-INF/view/</value>
@@ -57,7 +57,7 @@
             </list>
         </property>
 	</bean>
-	<!-- freemarker视图解析器 -->
+	freemarker视图解析器
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="contentType" value="text/html; charset=UTF-8" />
@@ -67,7 +67,7 @@
 		<property name="exposeSessionAttributes" value="true" />
 		<property name="exposeSpringMacroHelpers" value="true" />
 		<property name="requestContextAttribute" value="request" />
-	</bean>
+	</bean> -->
 
 
 
