@@ -1,11 +1,12 @@
-package com.me.dao;
+package com.yhq.dao;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.me.model.Concern;
+import com.me.dao.BaseDao;
+import com.yhq.model.Concern;
 
 @Repository
 public class ConcernDao extends BaseDao {
@@ -16,6 +17,7 @@ public class ConcernDao extends BaseDao {
 			getSession().save(concern);
 		} catch (HibernateException e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			result=false;
 		}
 		return result;

@@ -1,4 +1,4 @@
-package com.me.service;
+package com.yhq.service;
 
 import java.util.Date;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.me.dao.ConcernDao;
-import com.me.model.Concern;
+import com.yhq.dao.ConcernDao;
+import com.yhq.model.Concern;
 import com.me.model.Message;
 
 @Service
@@ -20,8 +20,8 @@ public class ConcernService {
 		Concern concern=concerns.isEmpty()?null:concerns.get(0);
 		if (concern==null) {
 			concern=new Concern();
-			concern.setConcernedid(concerned_id);
-			concern.setConcernerid(concerner_id);
+			concern.setConcernedId(concerned_id);
+			concern.setConcernerId(concerner_id);
 			concern.setCreateDate(new Date());
 			concern.setModifyDate(new Date());
 			concernDao.concernOthers(concern);
