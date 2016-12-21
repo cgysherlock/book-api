@@ -15,23 +15,21 @@ import com.me.http.Response;
 import com.me.model.Message;
 import com.yhq.model.Register;
 import com.yhq.service.AuthService;
+import com.yhq.service.UserService;
 
 
 @RestController
-@RequestMapping(value="/token")
-public class AuthController extends BaseController{
+@RequestMapping(value="/user")
+public class UserController extends BaseController{
 	
 	@Autowired
-	AuthService authService;
+	UserService userService;
 
-	@RequestMapping(method=RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public String getToken(
-		@RequestBody Register register
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+	public String delete(
+		@PathVariable Long id
 	) {
-		String tel = register.getTel();
-		String password = register.getPassword();
-		String smsCode = register.getSmsCode();
-		Message message = authService.verification(tel, password, smsCode);
+		Message message = userService.delete(id);
 		Response response = new Response(message);
 		return HttpKit.toJson(response);
 	}

@@ -10,11 +10,7 @@ import com.me.model.Concern;
 @Repository
 public class ConcernDao extends BaseDao {
 	
-	public boolean concernOthers(Concern concern)
-	{
-		StringBuilder sql = new StringBuilder("select ");
-		sql.append(str)
-		Query<Concern> query=getSession().createNativeQuery(sql.toString(), Concern.class);
+	public boolean concernOthers(Concern concern) {
 		boolean result=true;
 		try {
 			getSession().save(concern);

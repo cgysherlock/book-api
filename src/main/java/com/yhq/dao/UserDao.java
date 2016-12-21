@@ -2,6 +2,7 @@ package com.yhq.dao;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -55,6 +56,20 @@ public class UserDao extends PageDao<User> {
 	 */
 	public void save(User user) {
 		getSession().save(user);
+	}
+	
+	/**
+	 * 删除用户
+	 * @param user
+	 */
+	public boolean delete(User user) {
+		StringBuilder hql = new StringBuilder(" delete ");
+		hql.append("from User ");
+		hql.append("where id = :id");
+		Query<?> query = getSession().createQuery(hql.toString());
+		query.setParameter("id", user.getId());
+		int count = query.executeUpdate();
+		return count > 0;
 	}
 	
 }
