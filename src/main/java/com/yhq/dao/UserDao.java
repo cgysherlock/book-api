@@ -71,5 +71,14 @@ public class UserDao extends PageDao<User> {
 		int count = query.executeUpdate();
 		return count > 0;
 	}
+
+	/**
+	 * 根据id获得用户
+	 * @param id
+	 * @return
+	 */
+	public User getById(Long id) {
+		return getSession().get(User.class, id);
+	}
 	
 }

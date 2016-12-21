@@ -34,5 +34,13 @@ public class UserController extends BaseController{
 		return HttpKit.toJson(response);
 	}
 	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String query(
+		@PathVariable Long id
+	) {
+		Message message = userService.getById(id);
+		Response response = new Response(message);
+		return HttpKit.toJson(response);
+	}
 	
 }
