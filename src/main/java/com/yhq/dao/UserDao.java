@@ -1,15 +1,18 @@
 package com.yhq.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.me.dao.PageDao;
 import com.yhq.model.User;
 
 @Repository
+@Transactional
 public class UserDao extends PageDao<User> {
 	
 	/**
@@ -79,6 +82,15 @@ public class UserDao extends PageDao<User> {
 	 */
 	public User getById(Long id) {
 		return getSession().get(User.class, id);
+	}
+
+	public boolean addConcern(Long concerner_id,Long concerned_id) {
+		Query<?> query =getSession().createNativeQuery("insert into ssf_concern(create_date,modify_date,concerner_id,concerned_id) values(?,?,?,?)");
+		query.setParameter(1, new Date());
+		query.setParameter(2, new Date());
+		query.setParameter(3, concerner_id);
+		query.setParameter(4, concerned_id);
+		return query.executeUpdate()>0;
 	}
 	
 }

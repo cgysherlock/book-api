@@ -39,4 +39,16 @@ public class UserService {
 		message.dataPut("model", user);
 		return message;
 	}
+	
+	/**
+	 * 添加关注
+	 *@param concerner_id 
+	 *@param concerned_id
+	 */
+	public Message addConcern(Long concerner_id,Long concerned_id) {
+		Message message=null;
+		boolean result= userDao.addConcern(concerner_id, concerned_id);
+		message = result?Message.success("关注成功") :Message.error("关注失败");
+		return message; 
+	}
 }

@@ -82,6 +82,7 @@ public class AuthService {
 			if (checkPassword(user, password)) {
 				message = Message.success("登录成功");
 				message.dataPut("access_token", getAccessToken(user));
+				message.dataPut("model", user);
 			} else {
 				message = Message.error("密码错误");
 			}

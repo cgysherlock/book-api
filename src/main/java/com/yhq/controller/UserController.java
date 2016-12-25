@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.me.controller.BaseController;
@@ -40,6 +41,17 @@ public class UserController extends BaseController{
 	) {
 		Message message = userService.getById(id);
 		Response response = new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
+	@RequestMapping(value="/{id}/concern",method=RequestMethod.GET,produces = "application/json;charset=UTF-8")
+	public String addConcern(
+		@PathVariable(name="id") Long concernerId,
+		@RequestParam Long concernedId
+	){
+		Message message=userService.addConcern(concernerId, concernedId);
+		Response response=new Response();
+		response.setMessage(message);
 		return HttpKit.toJson(response);
 	}
 	
