@@ -17,6 +17,7 @@ import com.me.http.Session;
 import com.me.http.Token;
 import com.me.kit.StrKit;
 import com.me.model.Message;
+import com.yhq.model.User;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 

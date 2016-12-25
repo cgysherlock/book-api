@@ -15,6 +15,10 @@ public class Token {
 	 * 访问令牌
 	 */
 	private String accessToken;
+	/**
+	 * Token中的数据
+	 */
+	private Object data;
 	
 	/**
 	 * 生成令牌
@@ -60,6 +64,14 @@ public class Token {
 
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
+	}
+
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
 	}
 	
 	

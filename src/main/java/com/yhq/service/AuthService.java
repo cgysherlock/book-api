@@ -165,7 +165,8 @@ public class AuthService {
 	public String getAccessToken(User user) {
 		Token token = Token.generatorToken();
 		String accessToken = token.getAccessToken();
-		Session.put(accessToken, user);
+		token.setData(user);
+		Session.put(accessToken, token);
 		return accessToken;
 	}
 

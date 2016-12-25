@@ -26,4 +26,17 @@ public class UserService {
 		user.setId(id);
 		return userDao.delete(user) ? Message.success("删除成功") : Message.error("删除失败");
 	}
+
+	/**
+	 * 根据id获得用户
+	 * @param id
+	 * @return
+	 */
+	public Message getById(Long id) {
+		Message message = null;
+		User user = userDao.getById(id);
+		message =  user!= null ? Message.success("查询成功") : Message.error("查询失败");
+		message.dataPut("model", user);
+		return message;
+	}
 }
