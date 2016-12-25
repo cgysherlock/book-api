@@ -82,6 +82,7 @@ public class AuthService {
 			if (checkPassword(user, password)) {
 				message = Message.success("登录成功");
 				message.dataPut("access_token", getAccessToken(user));
+				message.dataPut("model", user);
 			} else {
 				message = Message.error("密码错误");
 			}
@@ -107,6 +108,7 @@ public class AuthService {
 		if (user != null){
 			message = Message.success("登录成功");
 			message.dataPut("access_token", getAccessToken(user));
+			message.dataPut("model", user);
 		} else {
 			message = Message.error("用户名不存在");
 		}
@@ -134,6 +136,7 @@ public class AuthService {
 			userDao.save(user);
 			message = Message.success("注册成功");
 			message.dataPut("access_token", getAccessToken(user));
+			message.dataPut("model", user);
 		} else {
 			message = Message.error("用户名已经存在");
 		}
