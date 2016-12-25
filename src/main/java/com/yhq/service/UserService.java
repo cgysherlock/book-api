@@ -9,7 +9,6 @@ import com.me.model.Message;
 import com.yhq.model.User;
 
 @Service
-@Transactional
 public class UserService {
 	
 	@Autowired
@@ -39,7 +38,7 @@ public class UserService {
 		message.dataPut("model", user);
 		return message;
 	}
-	
+
 	/**
 	 * 添加关注
 	 *@param concerner_id 
