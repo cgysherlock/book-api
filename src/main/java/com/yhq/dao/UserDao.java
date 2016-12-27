@@ -84,6 +84,12 @@ public class UserDao extends PageDao<User> {
 		return getSession().get(User.class, id);
 	}
 
+	/**
+	 * 添加关注
+	 * @param concerner_id
+	 * @param concerned_id
+	 * @return
+	 */
 	public boolean addConcern(Long concerner_id,Long concerned_id) {
 		Query<?> query =getSession().createNativeQuery("insert into ssf_concern(create_date,modify_date,concerner_id,concerned_id) values(?,?,?,?)");
 		query.setParameter(1, new Date());
@@ -91,6 +97,17 @@ public class UserDao extends PageDao<User> {
 		query.setParameter(3, concerner_id);
 		query.setParameter(4, concerned_id);
 		return query.executeUpdate()>0;
+	}
+	
+	/**
+	 * 查询粉丝
+	 * @param concernerId
+	 * @return
+	 */
+	public List<User> getFollowers(Long concernerId) {
+		Query<User> query=getSession().createNativeQuery("select * from sys_user user,ssf_concern concern where user.id=concern.concerned_id and concerner_id=?",User.class);
+		query.setParameter(1, concernerId);
+		return query.getResultList();
 	}
 	
 }

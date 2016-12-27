@@ -54,5 +54,14 @@ public class UserController extends BaseController{
 		response.setMessage(message);
 		return HttpKit.toJson(response);
 	}
+
+	@RequestMapping(value="/{id}/followers",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	public String getFollowers(
+		@PathVariable(name="id") Long concernerId
+	){
+		Message message=userService.getFollowers(concernerId);
+		Response response=new Response(message);
+		return HttpKit.toJson(response);
+	}
 	
 }
