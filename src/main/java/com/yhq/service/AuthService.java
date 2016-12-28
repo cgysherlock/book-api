@@ -173,8 +173,13 @@ public class AuthService {
 		return accessToken;
 	}
 
-	public Message login(String tel, String smsCode) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * 登出
+	 * @param access_token
+	 * @return
+	 */
+	public Message logout(String access_token) {
+		Session.remove(access_token);
+		return  Message.success("注销成功");
 	}
 }

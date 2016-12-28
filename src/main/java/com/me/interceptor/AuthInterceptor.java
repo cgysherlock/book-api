@@ -26,9 +26,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		// TODO Auto-generated method stub
 		printRequest(request);
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-		response.setHeader("Content-Type", "application/json;charset=utf-8");
 		String access_token = request.getHeader("Authorization");
 		Token token = StrKit.notBlank(access_token) ? (Token)Session.get(access_token) : null;
 		Message message = Token.checkToken(token);

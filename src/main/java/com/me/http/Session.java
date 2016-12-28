@@ -82,10 +82,10 @@ public class Session{
 	 * @param key
 	 * @return
 	 */
-	public static Object remove(String key) {
-		timeout.remove(key);
-		createTime.remove(key);
-		return map.remove(key);
+	public static void remove(String key) {
+		if (timeout.containsKey(key)) timeout.remove(key);
+		if (createTime.containsKey(key)) createTime.remove(key);
+		if (map.containsKey(key)) map.remove(key);
 	}
 	
 	/**
@@ -112,6 +112,10 @@ public class Session{
 	 * @return
 	 */
 	public static boolean clearTimeout(String key) {
-		return timeout.remove(key) > 0;
+		if (timeout.containsKey(key)) {
+			return timeout.remove(key) > 0;
+		} else {
+			return true;
+		}
 	}
 }
