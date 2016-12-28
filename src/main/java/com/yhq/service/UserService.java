@@ -1,5 +1,7 @@
 package com.yhq.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,4 +52,20 @@ public class UserService {
 		message = result?Message.success("关注成功") :Message.error("关注失败");
 		return message; 
 	}
+	
+	/**
+	 * 查询粉丝
+	 * @param concernerId
+	 * @return
+	 */
+	public Message getFollowers(Long concernerId){
+		Message message;
+		List<User> users=userDao.getFollowers(concernerId);
+		message = users.isEmpty()?Message.warn("没有人关注你"):Message.success("查询成功");
+		if (!users.isEmpty()) {
+			message.dataPut("users", users);
+		}
+		return message;
+	}
+	
 }
