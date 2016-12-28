@@ -55,11 +55,11 @@ public class UserController extends BaseController{
 		return HttpKit.toJson(response);
 	}
 
-	@RequestMapping(value="/{id}/followers",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/{id}/concerneds",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
 	public String getFollowers(
 		@PathVariable(name="id") Long concernerId
 	){
-		Message message=userService.getFollowers(concernerId);
+		Message message=userService.getConcerneds(concernerId);
 		Response response=new Response(message);
 		return HttpKit.toJson(response);
 	}
