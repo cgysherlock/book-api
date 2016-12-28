@@ -104,7 +104,7 @@ public class UserDao extends PageDao<User> {
 	 * @param concernerId
 	 * @return
 	 */
-	public List<User> getFollowers(Long concernerId) {
+	public List<User> getConcerneds(Long concernerId) {
 		Query<User> query=getSession().createNativeQuery("select * from sys_user user,ssf_concern concern where user.id=concern.concerned_id and concerner_id=?",User.class);
 		query.setParameter(1, concernerId);
 		return query.getResultList();
