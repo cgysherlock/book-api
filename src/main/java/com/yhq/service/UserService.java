@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.yhq.dao.UserDao;
 import com.me.model.Message;
@@ -64,6 +63,33 @@ public class UserService {
 		message = users.isEmpty()?Message.warn("没有人关注你"):Message.success("查询成功");
 		if (!users.isEmpty()) {
 			message.dataPut("users", users);
+		}
+		return message;
+	}
+	
+	/**
+	 * 取消关注
+	 * @param concernerId
+	 * @param concernedId
+	 * @return
+	 */
+	public Message deleteConcern(Long concernerId ,Long concernedId) {
+		Message message=userDao.deleteConcern(concernerId, concernedId)?Message.success("删除成功"):Message.error("删除失败");
+		return message;
+	}
+	
+	/**
+	 * 得到粉丝数最多的三个人
+	 * @return
+	 */
+	public Message getFamousUser(){
+		Message message;
+		List<User> users=userDao.getFamousUser();
+		if (users.isEmpty()) {
+			message=Message.warn("没有用户。。。。");
+		}else {
+			message=Message.success("查询粉丝量最多的用户成功");
+			message.dataPut("famousUsers", users);
 		}
 		return message;
 	}
