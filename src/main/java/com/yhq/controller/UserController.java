@@ -20,7 +20,7 @@ import com.yhq.service.UserService;
 
 
 @RestController
-@RequestMapping(value="/user")
+@RequestMapping(value="/users")
 public class UserController extends BaseController{
 	
 	@Autowired
@@ -44,7 +44,13 @@ public class UserController extends BaseController{
 		return HttpKit.toJson(response);
 	}
 	
-	@RequestMapping(value="/{id}/concern",method=RequestMethod.GET,produces = "application/json;charset=UTF-8")
+	/**
+	 * 添加关注
+	 * @param concernerId 关注人id
+	 * @param concernedId 被关注人的id
+	 * @return
+	 */
+	@RequestMapping(value="/{userId}/concern",method=RequestMethod.GET,produces = "application/json;charset=UTF-8")
 	public String addConcern(
 		@PathVariable(name="id") Long concernerId,
 		@RequestParam Long concernedId
@@ -55,12 +61,43 @@ public class UserController extends BaseController{
 		return HttpKit.toJson(response);
 	}
 
-	@RequestMapping(value="/{id}/concerneds",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	/**
+	 * 获取粉丝
+	 * @param concernerId 要获取粉丝的用户id
+	 * @return
+	 */
+	@RequestMapping(value="/{userId}/concerneds",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
 	public String getFollowers(
 		@PathVariable(name="id") Long concernerId
 	){
 		Message message=userService.getConcerneds(concernerId);
 		Response response=new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
+	/**
+	 * 删除关注
+	 * @param concernerId 关注人的id
+	 * @param concernedId 被关注的id
+	 * @return
+	 */
+	@RequestMapping(value="/{userId}/delete_concern/{id}",method=RequestMethod.DELETE,produces="application/json;charset=UTF-8")
+	public String deleteConcern(
+		@PathVariable(name="userId") Long concernerId,@PathVariable(name="id") Long concernedId 
+	){
+		Message message=userService.deleteConcern(concernerId, concernedId);
+		Response response=new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
+	/**
+	 * 获取粉丝人数最多的三个人
+	 * @return
+	 */
+	@RequestMapping(value="/famousUsers",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	public String getFamousUser(){
+		Message message=userService.getFamousUser();
+		Response response =new Response(message);
 		return HttpKit.toJson(response);
 	}
 	
