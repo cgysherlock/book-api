@@ -6,12 +6,12 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
- * Concern 实体类
- * Wed Dec 21 10:09:12 CST 2016 yhq
+ * Comment 实体类
+ * Mon Jan 02 15:55:31 CST 2017 cgy
  */ 
 @Entity
-@Table(name = "ssf_concern")
-public class Concern implements Serializable{
+@Table(name = "ssf_comment")
+public class Comment implements Serializable{
 
 	/**
 	 * 
@@ -28,11 +28,11 @@ public class Concern implements Serializable{
 	@Column(name = "modify_date")
 	private Date modifyDate;
 
-	@Column(name = "concerner_id")
-	private Long concernerId;
+	@Column
+	private String content;
 
-	@Column(name = "concerned_id")
-	private Long concernedId;
+	@Column
+	private byte score;
 
 	public void setId(Long id){
 		this.id = id;
@@ -58,20 +58,20 @@ public class Concern implements Serializable{
 		return modifyDate;
 	}
 
-	public void setConcernerId(Long concernerId){
-		this.concernerId = concernerId;
+	public void setContent(String content){
+		this.content = content;
 	}
 
-	public Long getConcernerId(){
-		return concernerId;
+	public String getContent(){
+		return content;
 	}
 
-	public void setConcernedId(Long concernedId){
-		this.concernedId = concernedId;
+	public void setScore(byte score){
+		this.score = score;
 	}
 
-	public Long getConcernedId(){
-		return concernedId;
+	public byte getScore(){
+		return score;
 	}
 
 }
