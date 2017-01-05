@@ -35,7 +35,7 @@ public class Book{
 	private Double price;
 
 	@Column
-	private int type;
+	private Integer type;
 
 	@Column
 	private String cover;
@@ -102,11 +102,11 @@ public class Book{
 		return price;
 	}
 
-	public int getType() {
+	public Integer getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 
