@@ -63,6 +63,21 @@ public class BookDao extends PageDao<Book>{
 		}
 		return true;
 	}
+
+	public boolean likeCommentOfBook(Long userid, Long commentid) {
+		Query<?> query=getSession().createNativeQuery(" update ssf_user_comment set ssf_user_comment.like=1 where ssf_user_comment.user_id=? and ssf_user_comment.comment_id=? ");
+		query.setParameter(1, userid);
+		query.setParameter(2, commentid);
+		return query.executeUpdate()>0;
+	}
+
+	public boolean unlikeCommentOfBook(Long userid, Long commentid) {
+		// TODO Auto-generated method stub
+		Query<?> query=getSession().createNativeQuery(" update ssf_user_comment set ssf_user_comment.like=0 where ssf_user_comment.user_id=? and ssf_user_comment.comment_id=? ");
+		query.setParameter(1, userid);
+		query.setParameter(2, commentid);
+		return query.executeUpdate()>0;
+	}
 	
 	
 }

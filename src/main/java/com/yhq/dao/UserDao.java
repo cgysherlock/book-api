@@ -10,7 +10,6 @@ import com.me.dao.PageDao;
 import com.yhq.model.User;
 
 @Repository
-@Transactional
 public class UserDao extends PageDao<User> {
 	
 	/**
@@ -102,9 +101,9 @@ public class UserDao extends PageDao<User> {
 	 * @param concernerId
 	 * @return
 	 */
-	public List<User> getConcerneds(Long concernerId) {
-		Query<User> query=getSession().createNativeQuery("select * from sys_user user,ssf_concern concern where user.id=concern.concerned_id and concerner_id=?",User.class);
-		query.setParameter(1, concernerId);
+	public List<User> getConcerneds(Long concernedId) {
+		Query<User> query=getSession().createNativeQuery("select * from sys_user user,ssf_concern concern where user.id=concern.concerned_id and user.id=?",User.class);
+		query.setParameter(1, concernedId);
 		return query.getResultList();
 	}
 	

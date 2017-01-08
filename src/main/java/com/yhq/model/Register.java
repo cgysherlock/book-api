@@ -1,7 +1,13 @@
 package com.yhq.model;
 
-public class Register {
+import java.io.Serializable;
+
+public class Register implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String tel;
 	private String password;
 	private String smsCode;

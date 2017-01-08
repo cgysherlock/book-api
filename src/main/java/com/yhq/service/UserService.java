@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yhq.dao.UserDao;
 import com.me.model.Message;
 import com.yhq.model.User;
 
 @Service
+@Transactional
 public class UserService {
 	
 	@Autowired
@@ -54,12 +56,12 @@ public class UserService {
 	
 	/**
 	 * 查询粉丝
-	 * @param concernerId
+	 * @param concernedId
 	 * @return
 	 */
-	public Message getConcerneds(Long concernerId){
+	public Message getConcerneds(Long concernedId){
 		Message message;
-		List<User> users=userDao.getConcerneds(concernerId);
+		List<User> users=userDao.getConcerneds(concernedId);
 		message = users.isEmpty()?Message.warn("没有人关注你"):Message.success("查询成功");
 		if (!users.isEmpty()) {
 			message.dataPut("users", users);

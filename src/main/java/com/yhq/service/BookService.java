@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.me.kit.StrKit;
+import org.springframework.transaction.annotation.Transactional;
 import com.me.model.Message;
 import com.yhq.dao.BookDao;
 import com.yhq.model.Book;
 
 @Service
+@Transactional
 public class BookService {
 	@Autowired
 	private BookDao bookDao;
@@ -67,5 +67,14 @@ public class BookService {
 			message = Message.error("删除失败！");
 		}
 		return message;
+	}
+
+	public Message likeCommentOfBook(Long userid, Long commentid) {
+		return bookDao.likeCommentOfBook(userid,commentid)?Message.success("点赞成功"):Message.error("点赞失败");
+	}
+
+	public Message unlikeCommentOfBook(Long userid, Long commentid) {
+		// TODO Auto-generated method stub
+		return bookDao.unlikeCommentOfBook(userid,commentid)?Message.success("取消点赞成功"):Message.error("取消点赞失败");
 	}
 }
