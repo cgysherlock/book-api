@@ -12,14 +12,80 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.me.http.HttpKit;
 import com.me.model.Message;
 import com.yhq.dao.BookDao;
 import com.yhq.model.Book;
+import com.yhq.model.Comment;
+import com.yhq.model.User;
 
 @Service
 public class BookService {
 	@Autowired
 	private BookDao bookDao;
+	
+	/**
+	 * 评论某本书
+	 * @param accessToken
+	 * @param id
+	 * @param content
+	 * @return
+	 */
+	public Message commentBook(String accessToken, Long id, String content, String score) {
+		Message message = null;
+		Byte scores =  Byte.parseByte(score);
+		User user = HttpKit.getCurrentUser(accessToken);
+		Comment comment = new Comment();
+		comment.setContent(content);
+		comment.setScore(scores);
+		Book book = new Book();
+		book.setId(id);
+		if(bookDao.commentBook(user, book, comment)) {
+			message = Message.success("评论书本成功");
+			message.dataPut("model", comment);
+		}
+		else {
+			message = Message.error("评论某书失败！");
+		}
+		return message;
+	}
+	/**
+	 * 查询当前用户收藏的书籍
+	 * @param accessToken
+	 * @return
+	 */
+	public Message queryCollectionBook(String accessToken ) {
+		Message message = null;
+		User user = HttpKit.getCurrentUser(accessToken);
+		List<?> list = bookDao.queryCollectionBook(user);
+		if (list != null && list.size() > 0) {
+			message = Message.success("查询当前用户收藏的书");
+			message.dataPut("list", list);
+		}
+		else {
+			message =  Message.error("查询当前用户收藏的书失败！");
+		}
+		return message;
+	}
+	/**
+	 * 查询某本书的评论
+	 * @param id
+	 * @return
+	 */
+	public Message QueryBookComment(Long id) {
+		Message message = null;
+		Book book = new Book();
+		book.setId(id);
+		List<?> list = bookDao.getOneBookComment(book);
+		if (list != null && list.size() > 0) {
+			message = Message.success("查询书本评论成功！");
+			message.dataPut("list", list);
+		}
+		else {
+			message = Message.error("查询书本失败！");
+		}
+		return message;
+	}
 	/**
 	 * 上传书本
 	 * @param cover
@@ -128,7 +194,7 @@ public class BookService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("imgurl:"+ path+newFileName);
+			System.out.println("imgurl/:"+ path+newFileName);
 		}
 		return newFileName;
 	}
