@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.me.http.HttpKit;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +26,68 @@ public class BookService {
 	private BookDao bookDao;
 	
 	/**
+	 * 设置不喜欢某本书
+	 * @param accessToken
+	 * @param id
+	 * @return
+	 */
+	public Message unlikeBook(String accessToken, Long id){
+		User user = HttpKit.getCurrentUser(accessToken);
+		Message message = null;
+		if(bookDao.unlike(user, id)){
+			message = Message.success("设置不喜欢某本书成功！");
+		}
+		else {
+			message = Message.error("设置不喜欢某本书失败！");
+		}
+		return message;
+	}
+	/**
+	 * 设置喜欢某本书
+	 * @param accessToken
+	 * @param id
+	 * @return
+	 */
+	public Message likeBook(String accessToken, Long id) {
+		User user = HttpKit.getCurrentUser(accessToken);
+		Book book = new Book();
+		book.setId(id);
+		Message message = null;
+		if(bookDao.likeBook(user, book)){
+			message = Message.success("喜欢某书成功!");
+		}
+		else {
+			message = Message.error("喜欢某书失败！");
+		}
+		return message;
+	}
+	/**
+	 * 收藏某本书
+	 * @param accessToken
+	 * @param id
+	 * @return
+	 */
+	public Message collectionBook(String accessToken, Long id) {
+		Message message = null;
+		User user = HttpKit.getCurrentUser(accessToken);
+		Book book = new Book();
+		book.setId(id);
+		if(bookDao.collectionBook(user, book)) {
+			message = Message.success("收藏书本成功！");
+		}
+		else {
+			message = Message.error("收藏书本失败！");
+		}
+		return message;
+	}
+	/**
 	 * 评论某本书
 	 * @param accessToken
 	 * @param id
 	 * @param content
 	 * @return
 	 */
+	
 	public Message commentBook(String accessToken, Long id, String content, String score) {
 		Message message = null;
 		Byte scores =  Byte.parseByte(score);

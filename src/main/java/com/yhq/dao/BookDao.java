@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.me.dao.PageDao;
 import com.yhq.model.Book;
+import com.yhq.model.BookCollection;
 import com.yhq.model.BookComment;
+import com.yhq.model.BookLike;
 import com.yhq.model.Comment;
 import com.yhq.model.User;
 
@@ -20,6 +22,58 @@ import com.yhq.model.User;
 public class BookDao extends PageDao<Book>{
 	
 	
+	/**
+	 * 设置喜欢某本书
+	 * @param user
+	 * @param book
+	 * @return
+	 */
+	public boolean likeBook(User user, Book book) {
+		try{
+			BookLike bookLike = new BookLike();
+			bookLike.setBookId(book.getId());
+			bookLike.setUserId(user.getId());
+			getSession().save(bookLike);
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+	}
+	/**
+	 * 设置不喜欢某本书
+	 * @param user
+	 * @param bookId
+	 * @return
+	 */
+	public boolean unlike(User user, Long bookId) {
+		try{
+			StringBuilder sql = new StringBuilder("");
+			sql.append("delete ssf_book_like where ssf_book_like.user_id = :userId and ssf_book_like.book_id = :bookId");
+			Query<?> query = getSession().createNativeQuery(sql.toString());
+			query.setParameter("userId", user.getId());
+			query.setParameter("bookId", bookId);
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+	}
+	public boolean collectionBook(User user, Book book) {
+		try{
+			BookCollection bookCollection = new BookCollection();
+			bookCollection.setBookId(book.getId());
+			bookCollection.setUserId(user.getId());
+			getSession().save(bookCollection);
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+	}
 	/**
 	 * 对某书进行评论
 	 * @param user

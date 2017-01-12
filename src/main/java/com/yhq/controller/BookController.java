@@ -2,6 +2,7 @@ package com.yhq.controller;
 
 import java.util.Map;
 
+import org.apache.coyote.http11.Http11AprProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,22 @@ public class BookController extends BaseController{
 		Message message = bookService.commentBook(authorization, id, content, score);
 		Response response = new Response(message);
 		return HttpKit.toJson(response);
+	}
+	/**
+	 * 收藏某本书
+	 * @param id
+	 * @param authorization
+	 * @return
+	 */
+	@RequestMapping(value ="/{id}/collection", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String collectionBook(
+			@PathVariable Long id,
+			@RequestHeader String authorization
+			){
+		Message message = bookService.collectionBook(authorization, id);
+		Response response = new Response(message);
+		return HttpKit.toJson(response);
+		
 	}
 	/**
 	 * 查询当前用户收藏的书籍
@@ -145,6 +162,37 @@ public class BookController extends BaseController{
 		return HttpKit.toJson(response);
 	}
 	
+	/**
+	 * 设置喜欢某本书
+	 * @param id
+	 * @param authorization
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}/like", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String likeBook(
+			@PathVariable Long id,
+			@RequestHeader String authorization
+			){
+		Message message = bookService.likeBook(authorization, id);
+		Response response = new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
+	/**
+	 * 设置不喜欢某本书
+	 * @param id
+	 * @param authorization
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}/unlike", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String unlikeBook(
+			@PathVariable Long id,
+			@RequestHeader String authorization
+			){
+		Message message = bookService.unlikeBook(authorization, id);
+		Response response = new Response(message);
+		return HttpKit.toJson(response);
+	}
 	/**
 	 * 取消点赞某条对书的评论
 	 * @param commentid
