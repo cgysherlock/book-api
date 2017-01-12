@@ -87,10 +87,7 @@ public class ShelfService {
 	}
 	
 	public Message commentShelf(Long id,Comment comment) {
-		shelfDao.saveComment(comment);
-		System.out.println("ididid"+comment.getId());
-		boolean issuccess=shelfDao.commentShelf(id, comment.getId());
-		return issuccess?Message.success("评论成功"):Message.error("评论失败");
+		return shelfDao.saveComment(comment) && shelfDao.commentShelf(id, comment.getId()) ? Message.success("评论成功") : Message.success("评论失败");
 	}
 	
 	public Message getCurrentUserShelves(Long id) {

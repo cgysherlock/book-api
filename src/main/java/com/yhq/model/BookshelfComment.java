@@ -2,6 +2,7 @@ package com.yhq.model;
 
 import java.util.Date;
 
+
 import javax.persistence.*;
 
 /**
@@ -69,4 +70,3 @@ public class BookshelfComment{
 	}
 
 }
-
