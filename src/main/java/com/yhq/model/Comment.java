@@ -1,16 +1,22 @@
 package com.yhq.model;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.*;
 
-/**
- * Comment 实体类
- * Wed Jan 04 21:40:00 CST 2017 zlm
- */ 
+
+
 @Entity
 @Table(name = "ssf_comment")
-public class Comment{
+public class Comment implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -7,12 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import com.me.http.HttpKit;
+import org.springframework.transaction.annotation.Transactional;
 import com.me.model.Message;
 import com.yhq.dao.BookDao;
 import com.yhq.model.Book;
@@ -20,6 +19,7 @@ import com.yhq.model.Comment;
 import com.yhq.model.User;
 
 @Service
+@Transactional
 public class BookService {
 	@Autowired
 	private BookDao bookDao;
@@ -197,5 +197,14 @@ public class BookService {
 			System.out.println("imgurl/:"+ path+newFileName);
 		}
 		return newFileName;
+	}
+
+	public Message likeCommentOfBook(Long userid, Long commentid) {
+		return bookDao.likeCommentOfBook(userid,commentid)?Message.success("点赞成功"):Message.error("点赞失败");
+	}
+
+	public Message unlikeCommentOfBook(Long userid, Long commentid) {
+		// TODO Auto-generated method stub
+		return bookDao.unlikeCommentOfBook(userid,commentid)?Message.success("取消点赞成功"):Message.error("取消点赞失败");
 	}
 }

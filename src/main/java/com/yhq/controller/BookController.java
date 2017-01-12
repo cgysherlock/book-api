@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import com.me.controller.BaseController;
 import com.me.http.HttpKit;
 import com.me.http.Response;
@@ -114,7 +113,7 @@ public class BookController extends BaseController{
 		Response response = new Response(message);
 		return HttpKit.toJson(response);
 	}
-	
+
 	/**
 	 * 删除某本书
 	 * @param id
@@ -129,4 +128,37 @@ public class BookController extends BaseController{
 		Response response = new Response(message);
 		return HttpKit.toJson(response);
 	}
+	
+	/**
+	 * 点赞某条对书的评论
+	 * @param commentid
+	 * @param authorization
+	 * @return
+	 */
+	@RequestMapping(value="/comments/{comment_id}/like",method = RequestMethod.PATCH, produces = "application/json;charset=UTF-8")
+	public String likeCommentOfBook(@PathVariable(name="comment_id") Long commentid,@RequestHeader String authorization){
+		Message message= bookService.likeCommentOfBook(
+//				HttpKit.getCurrentUser(authorization).getId()
+				Long.valueOf(1)
+				, commentid);
+		Response response=new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
+	/**
+	 * 取消点赞某条对书的评论
+	 * @param commentid
+	 * @param authorization
+	 * @return
+	 */
+	@RequestMapping(value="/comments/{comment_id}/unlike",method = RequestMethod.PATCH, produces = "application/json;charset=UTF-8")
+	public String unlikeCommentOfBook(@PathVariable(name="comment_id") Long commentid,@RequestHeader String authorization){
+		Message message= bookService.unlikeCommentOfBook(
+//				HttpKit.getCurrentUser(authorization).getId()
+				Long.valueOf(1)
+				, commentid);
+		Response response=new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
 }
