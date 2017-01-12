@@ -7,18 +7,73 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.me.http.HttpKit;
 import com.me.model.Message;
 import com.yhq.dao.ShelfDao;
 import com.yhq.model.BookShelf;
 import com.yhq.model.BookShelfCollection;
 import com.yhq.model.Comment;
+import com.yhq.model.User;
 
 @Service
 @Transactional
 public class ShelfService {
 
 	@Autowired ShelfDao shelfDao;
-	
+	/**
+	 * 设置喜欢某个书架
+	 * @param accesstoken
+	 * @param bookshelfId
+	 * @return
+	 */
+	public Message likeBookshelf(String accesstoken , Long bookshelfId){
+		Message message = null;
+		User user = HttpKit.getCurrentUser(accesstoken);
+		BookShelf bookShelf = new BookShelf();
+		bookShelf.setId(bookshelfId);
+		if(shelfDao.likeBookshelf(user, bookShelf)){
+			message = Message.success("设置喜欢某个书架成功！");
+		}
+		else{
+			message = Message.error("设置喜欢某个书架失败!");
+		}
+		return message;
+	}
+	/**
+	 * 获得当前用户的某个书架
+	 * @param user
+	 * @param id
+	 * @return
+	 */
+	public Message getUserOneShelf(User user , Long id) {
+		Message message = null;
+		List<?> list = shelfDao.getUserOneShelf(user, id);
+		if(list != null && list.size() > 0) {
+			message = Message.success("获得当前用户的某个书架成功！	");
+			message.dataPut("list", list);
+		}
+		else {
+			message = Message.error("获得当前用户的某个书架失败！");
+		}
+		return message;
+	}
+	/**
+	 * 获取用户当前的书架
+	 * @param id
+	 * @return
+	 */
+	public Message getUserShelves(User user) {
+		Message message = null;
+		List<?> list = shelfDao.getUserShelves(user);
+		if(list != null && list.size() > 0) {
+			message = Message.success("获得当前用户的书架成功");
+			message.dataPut("list", list);
+		}
+		else{
+			message = Message.error("获得当前用户的书架失败！");
+		}
+		return message;
+	}
 	public Message getShelfComments(Long id){
 		Message message;
 		List<Comment> comments=shelfDao.getShelfComments(id);

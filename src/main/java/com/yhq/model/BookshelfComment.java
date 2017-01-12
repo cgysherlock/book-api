@@ -2,11 +2,12 @@ package com.yhq.model;
 
 import java.util.Date;
 
+
 import javax.persistence.*;
 
 /**
  * BookshelfComment 实体类
- * Sun Jan 08 12:02:15 CST 2017 yhq
+ * Thu Jan 12 23:12:40 CST 2017 zlm
  */ 
 @Entity
 @Table(name = "ssf_bookshelf_comment")
@@ -69,4 +70,3 @@ public class BookshelfComment{
 	}
 
 }
-
