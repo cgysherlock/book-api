@@ -11,6 +11,7 @@ import com.me.dao.BaseDao;
 import com.yhq.model.BookShelf;
 import com.yhq.model.BookShelfCollection;
 import com.yhq.model.BookshelfLike;
+import com.yhq.model.BookshelfComment;
 import com.yhq.model.Comment;
 import com.yhq.model.User;
 
