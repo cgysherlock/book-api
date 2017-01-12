@@ -38,7 +38,7 @@ public class ShelfController extends BaseController{
 	 * 对某个书架评价
 	 * @param id
 	 * @param comment
-	 * @return  在navicat可以执行，在这里插入数据会报错
+	 * @return
 	 */
 	@RequestMapping(value="/{id}/comments",method=RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String commentShelf(@PathVariable Long id, @RequestBody Comment comment){

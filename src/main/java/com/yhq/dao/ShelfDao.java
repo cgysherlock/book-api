@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.me.dao.BaseDao;
 import com.yhq.model.BookShelf;
 import com.yhq.model.BookShelfCollection;
+import com.yhq.model.BookshelfComment;
 import com.yhq.model.Comment;
 
 @Repository
@@ -20,22 +21,20 @@ public class ShelfDao extends BaseDao {
 		return query.getResultList();
 	}
 	
-	public void saveComment(Comment comment) {
+	public boolean saveComment(Comment comment) {
 		comment.setCreateDate(new Date());
 		comment.setModifyDate(new Date());
-		getSession().save(comment);
+		return (Long)getSession().save(comment) != null;
 	}
 	
 	public boolean commentShelf(Long id,Long commentid) {
-//		System.out.println("comment de id wei"+commentid);
-		String sql=new String("insert into ssf_bookshelf_comment(create_date,modify_date,comment_id,bookshelf_id) values(?,?,?,?)");
-		Query<?> query =getSession().createNativeQuery(sql);
-		query.setParameter(1, new Date());
-		query.setParameter(2, new Date());
-		query.setParameter(3, commentid);
-		query.setParameter(4, id);
-		return query.executeUpdate()>0;
-//		return true;
+		BookshelfComment bookshelfComment = new BookshelfComment();
+		bookshelfComment.setCreateDate(new Date());
+		bookshelfComment.setModifyDate(bookshelfComment.getCreateDate());
+		bookshelfComment.setCommentId(commentid);
+		bookshelfComment.setBookshelfId(id);
+		Long shelfId = (Long)getSession().save(bookshelfComment);
+		return shelfId != null;
 	}
 	
 	public List<BookShelf> getCurrentUserShelves(Long id){
