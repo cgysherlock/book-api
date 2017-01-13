@@ -124,4 +124,29 @@ public class ShelfService {
 	public Message dislikeBookShelf(Long id, Long id2) {
 		return shelfDao.dislikeBookShelf(id,id2)?Message.success("取消喜欢书架成功"):Message.error("取消喜欢书架失败");
 	}
+	
+	public Message getLatestBookshelf() {
+		// TODO Auto-generated method stub
+		List<BookShelf> bookShelfs=shelfDao.getLatestBookshelf();
+		Message message;
+		if (bookShelfs.isEmpty()) {
+			message=Message.warn("无最新书架");
+		}else {
+			message=Message.success("查询最新书架成功");
+			message.dataPut("bookshelves", bookShelfs);;
+		}
+		return message;
+	}
+	public Message getFamousBookshelf() {
+		List<BookShelf> bookShelfs=shelfDao.getFamousBookshelf();
+		Message message;
+		if (bookShelfs.isEmpty()) {
+			message=Message.warn("无最多评论书架");
+		}else {
+			message=Message.success("查询最多评论书架成功");
+			message.dataPut("bookshelves", bookShelfs);
+		}
+		// TODO Auto-generated method stub
+		return message;
+	}
 }

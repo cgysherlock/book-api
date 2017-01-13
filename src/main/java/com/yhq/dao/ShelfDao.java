@@ -138,4 +138,14 @@ public class ShelfDao extends BaseDao {
 		query.setParameter(2, id2);
 		return query.executeUpdate()>0;
 	}
+	public List<BookShelf> getLatestBookshelf() {
+		Query<BookShelf> query=getSession().createNativeQuery("select * from ssf_bookshelf bookshelf order by  bookshelf.create_date desc limit 0,5",BookShelf.class);
+		return query.getResultList();
+	}
+	public List<BookShelf> getFamousBookshelf() {
+		StringBuilder sql=new StringBuilder("select bookshelf.id,bookshelf.create_date,bookshelf.modify_date,bookshelf.name,bookshelf.user_id,count(bookshelfcomment.bookshelf_id) count from ssf_bookshelf bookshelf left join ssf_bookshelf_comment bookshelfcomment on bookshelf.id=bookshelfcomment.bookshelf_id");
+		sql.append(" group by bookshelfcomment.bookshelf_id,bookshelf.id,bookshelf.create_date,bookshelf.modify_date,bookshelf.name,bookshelf.user_id order by count desc limit 0,5");
+		Query<BookShelf> query=getSession().createNativeQuery(sql.toString(),BookShelf.class);
+		return query.getResultList();
+	}
 }
