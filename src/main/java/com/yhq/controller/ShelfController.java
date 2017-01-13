@@ -23,6 +23,35 @@ public class ShelfController extends BaseController{
 	@Autowired ShelfService shelfService;
 	
 	/**
+	 * 获得当前用户的某个书架
+	 * @param id
+	 * @param authorization
+	 * @return
+	 */
+	public String getUserOneBookShelves(
+			@PathVariable Long id,
+			@RequestHeader String authorization
+			) {
+		User user = HttpKit.getCurrentUser(authorization);
+		Message message = shelfService.getUserOneShelf(user, id);
+		Response response = new Response(message);
+		return HttpKit.toJson(response);
+	}
+	/**
+	 * 获得当前用户的书架
+	 * @param authorization
+	 * @return
+	 */
+	@RequestMapping(value = "/bookshelves", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String getUserBookShelves(
+			@RequestHeader String authorization
+			){
+		User user = HttpKit.getCurrentUser(authorization);
+		Message message = shelfService.getUserShelves(user);
+		Response response = new Response(message);
+		return HttpKit.toJson(response);
+	}
+	/**
 	 * 获得某个书架的评论
 	 * @param id
 	 * @return
@@ -38,7 +67,7 @@ public class ShelfController extends BaseController{
 	 * 对某个书架评价
 	 * @param id
 	 * @param comment
-	 * @return  在navicat可以执行，在这里插入数据会报错
+	 * @return
 	 */
 	@RequestMapping(value="/{id}/comments",method=RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String commentShelf(@PathVariable Long id, @RequestBody Comment comment){
@@ -106,6 +135,21 @@ public class ShelfController extends BaseController{
 		return HttpKit.toJson(response);
 	}
 	
+	/**
+	 * 设置喜欢某个书架
+	 * @param id
+	 * @param authorization
+	 * @return
+	 */
+	@RequestMapping(value="/{id}/like", method=RequestMethod.DELETE,produces = "application/json;charset=UTF-8")
+	public String likeBookShelf(
+			@PathVariable Long id,
+			@RequestHeader String authorization
+			){
+		Message message = shelfService.likeBookshelf(authorization, id);
+		Response response = new Response(message);
+		return HttpKit.toJson(response);
+	}
 	/**
 	 * 设置不喜欢某个书架
 	 * @param id

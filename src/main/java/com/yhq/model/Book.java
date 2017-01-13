@@ -1,22 +1,16 @@
 package com.yhq.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
 
 /**
  * Book 实体类
- * Sun Dec 18 14:16:44 CST 2016 Wrappers
+ * Wed Dec 28 22:13:19 CST 2016 zlm
  */ 
 @Entity
 @Table(name = "ssf_book")
-public class Book implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Book{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,7 +35,7 @@ public class Book implements Serializable{
 	private Double price;
 
 	@Column
-	private int type;
+	private Long type;
 
 	@Column
 	private String cover;
@@ -108,12 +102,12 @@ public class Book implements Serializable{
 		return price;
 	}
 
-	public int getType() {
-		return type;
+	public void setType(Long type){
+		this.type = type;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public Long getType(){
+		return type;
 	}
 
 	public void setCover(String cover){

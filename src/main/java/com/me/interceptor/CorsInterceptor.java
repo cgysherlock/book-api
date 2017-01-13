@@ -16,6 +16,7 @@ public class CorsInterceptor extends HandlerInterceptorAdapter {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 		response.setHeader("Content-Type", "application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Methods", "POST,PATCH,GET,PUT,DELETE");
 		return true;
 	}
 

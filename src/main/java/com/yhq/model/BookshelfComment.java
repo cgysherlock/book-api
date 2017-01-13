@@ -1,22 +1,17 @@
 package com.yhq.model;
 
-import java.io.Serializable;
-
 import java.util.Date;
+
 
 import javax.persistence.*;
 
-
-
+/**
+ * BookshelfComment 实体类
+ * Thu Jan 12 23:12:40 CST 2017 zlm
+ */ 
 @Entity
-@Table(name = "ssf_comment")
-public class Comment implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+@Table(name = "ssf_bookshelf_comment")
+public class BookshelfComment{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,11 +23,11 @@ public class Comment implements Serializable{
 	@Column(name = "modify_date")
 	private Date modifyDate;
 
-	@Column
-	private String content;
+	@Column(name = "comment_id")
+	private Long commentId;
 
-	@Column
-	private byte score;
+	@Column(name = "bookshelf_id")
+	private Long bookshelfId;
 
 	public void setId(Long id){
 		this.id = id;
@@ -58,21 +53,20 @@ public class Comment implements Serializable{
 		return modifyDate;
 	}
 
-	public void setContent(String content){
-		this.content = content;
+	public void setCommentId(Long commentId){
+		this.commentId = commentId;
 	}
 
-	public String getContent(){
-		return content;
+	public Long getCommentId(){
+		return commentId;
 	}
 
-	public void setScore(byte score){
-		this.score = score;
+	public void setBookshelfId(Long bookshelfId){
+		this.bookshelfId = bookshelfId;
 	}
 
-	public byte getScore(){
-		return score;
+	public Long getBookshelfId(){
+		return bookshelfId;
 	}
 
 }
-
