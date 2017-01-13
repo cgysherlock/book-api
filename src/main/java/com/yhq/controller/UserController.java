@@ -88,7 +88,7 @@ public class UserController extends BaseController{
 	}
 	
 	/**
-	 * 获取粉丝人数最多的三个人
+	 * 获取粉丝人数最多的5个人，和他们带收藏带书架数和书本数，sql有问题
 	 * @return
 	 */
 	@RequestMapping(value="/famousUsers",method=RequestMethod.GET,produces="application/json;charset=UTF-8")

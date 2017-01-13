@@ -1,6 +1,7 @@
 package com.yhq.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,7 +87,7 @@ public class UserService {
 	 */
 	public Message getFamousUser(){
 		Message message;
-		List<User> users=userDao.getFamousUser();
+		List<Map<String, String>> users=userDao.getFamousUser();
 		if (users.isEmpty()) {
 			message=Message.warn("没有用户。。。。");
 		}else {
