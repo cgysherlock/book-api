@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.me.http.HttpKit;
 import com.me.model.Message;
 import com.yhq.dao.ShelfDao;
+import com.yhq.model.Book;
 import com.yhq.model.BookShelf;
 import com.yhq.model.BookShelfCollection;
+import com.yhq.model.BookshelfComment;
 import com.yhq.model.Comment;
 import com.yhq.model.User;
 
@@ -149,4 +151,11 @@ public class ShelfService {
 		// TODO Auto-generated method stub
 		return message;
 	}
+	public Message test() {
+		List<BookShelf> bookShelfs=shelfDao.test();
+		Message message=Message.success("success");
+		message.dataPut("shelves", bookShelfs);
+		return message;
+	}
+
 }

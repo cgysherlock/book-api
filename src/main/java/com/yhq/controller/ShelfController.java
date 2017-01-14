@@ -186,4 +186,11 @@ public class ShelfController extends BaseController{
 		Response response=new Response(message);
 		return HttpKit.toJson(response);
 	}
+	
+	@RequestMapping(value="/test",method=RequestMethod.GET,produces = "application/json;charset=UTF-8")
+	public String test(){
+		Message message=shelfService.test();
+		return HttpKit.toJson(new Response(message));
+	}
+	
 }

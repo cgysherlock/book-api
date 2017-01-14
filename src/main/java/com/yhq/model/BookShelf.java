@@ -34,6 +34,8 @@ public class BookShelf implements Serializable{
 	@Column(name = "user_id")
 	private Long userId;
 
+	private String userName;
+	
 	public void setId(Long id){
 		this.id = id;
 	}
@@ -72,6 +74,14 @@ public class BookShelf implements Serializable{
 
 	public Long getUserId(){
 		return userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

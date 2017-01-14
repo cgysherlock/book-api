@@ -148,4 +148,9 @@ public class ShelfDao extends BaseDao {
 		Query<BookShelf> query=getSession().createNativeQuery(sql.toString(),BookShelf.class);
 		return query.getResultList();
 	}
+	public List<BookShelf> test() {
+		Query<BookShelf> query=getSession().createNativeQuery("select bookshelf.id,bookshelf.create_date,bookshelf.modify_date,bookshelf.name,bookshelf.user_id,user.name userName from ssf_bookshelf bookshelf left join sys_user user on bookshelf.user_id=user.id",BookShelf.class);
+		return query.getResultList();
+	}
+
 }
