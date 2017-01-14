@@ -38,27 +38,7 @@ public class ShelfController extends BaseController{
 		return HttpKit.toJson(response);
 	}
 	
-	/**
-	 * 获得最新的5个书架
-	 * @return
-	 */
-	@RequestMapping(value="/isLastest",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
-	public String getLatestBookshelf(){
-		Message message= shelfService.getLatestBookshelf();
-		Response response=new Response(message);
-		return HttpKit.toJson(response);
-	}
 	
-	/**
-	 * 获得评论数最多的5个书架
-	 * @return
-	 */
-	@RequestMapping(value="/isFamous",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
-	public String getFamousBookshelf(){
-		Message message=shelfService.getFamousBookshelf();
-		Response response=new Response(message);
-		return HttpKit.toJson(response);
-	}
 	
 	/**
 	 * 获得当前用户的书架

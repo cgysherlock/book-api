@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.me.http.HttpKit;
 import org.springframework.transaction.annotation.Transactional;
@@ -263,5 +262,31 @@ public class BookService {
 	public Message unlikeCommentOfBook(Long userid, Long commentid) {
 		// TODO Auto-generated method stub
 		return bookDao.unlikeCommentOfBook(userid,commentid)?Message.success("取消点赞成功"):Message.error("取消点赞失败");
+	}
+	
+	public Message getLatestBook() {
+		// TODO Auto-generated method stub
+		List<Book> books=bookDao.getLatestBook();
+		Message message;
+		if (books.isEmpty()) {
+			message=Message.success("无最新书");
+		}else {
+			message=Message.success("查询最新书");
+			message.dataPut("books", books);;
+		}
+		return message;
+	}
+	
+	public Message getFamousBook() {
+		List<Book> bookShelfs=bookDao.getFamousBook();
+		Message message;
+		if (bookShelfs.isEmpty()) {
+			message=Message.success("无最多评论书");
+		}else {
+			message=Message.success("查询最多评论书");
+			message.dataPut("bookshelves", bookShelfs);
+		}
+		// TODO Auto-generated method stub
+		return message;
 	}
 }

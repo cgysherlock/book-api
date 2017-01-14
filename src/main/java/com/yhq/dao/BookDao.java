@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.me.dao.PageDao;
 import com.yhq.model.Book;
 import com.yhq.model.BookCollection;
@@ -211,4 +210,18 @@ public class BookDao extends PageDao<Book>{
 		int count = query.executeUpdate();
 		return count > 0;
 	}
+	
+	public List<Book> getLatestBook() {
+		Query<Book> query=getSession().createNativeQuery("select * from ssf_book book order by  book.create_date desc limit 0,5",Book.class);
+		return query.getResultList();
+	}
+	
+	public List<Book> getFamousBook() {
+		StringBuilder sql=new StringBuilder("select book.id,book.create_date,book.modify_date,book.name,book.author,book.intro,book.price,book.type,book.cover,book.picture,book.introduction,count(bookcomment.book_id) countc");
+		sql.append(" from ssf_book book left join ssf_book_comment bookcomment on book.id=bookcomment.book_id ");
+		sql.append(" group by book.id,book.create_date,book.modify_date,book.name,book.author,book.intro,book.price,book.type,book.cover,book.picture,book.introduction,bookcomment.book_id order by countc desc limit 0,5 ");
+		Query<Book> query=getSession().createNativeQuery(sql.toString(),Book.class);
+		return query.getResultList();
+	}
+	
 }

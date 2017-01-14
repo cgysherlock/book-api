@@ -1,8 +1,6 @@
 package com.yhq.controller;
 
 import java.util.Map;
-
-import org.apache.coyote.http11.Http11AprProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -205,6 +203,28 @@ public class BookController extends BaseController{
 //				HttpKit.getCurrentUser(authorization).getId()
 				Long.valueOf(1)
 				, commentid);
+		Response response=new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
+	/**
+	 *  最新的书
+	 * @return
+	 */
+	@RequestMapping(value="/isLatest",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	public String getLatestBook(){
+		Message message= bookService.getLatestBook();
+		Response response=new Response(message);
+		return HttpKit.toJson(response);
+	}
+	
+	/**
+	 * 获得评论数最多的5个书
+	 * @return
+	 */
+	@RequestMapping(value="/isFamous",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	public String getFamousBook(){
+		Message message=bookService.getFamousBook();
 		Response response=new Response(message);
 		return HttpKit.toJson(response);
 	}
